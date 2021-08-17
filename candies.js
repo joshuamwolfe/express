@@ -1,7 +1,6 @@
 const { Router } = require('express');
-
 const express = require('express');
-
+const ExpressError = require('./expressError');
 const app = express();
 
 // Parsing the Body:
@@ -29,6 +28,14 @@ app.post('/candies', (req, res) => {
 	// res.json(`${CANDIES}`);  res.json explicitly sends json
 	res.status(201).json(CANDIES);
 });
+
+//example shouldnt work in current code
+app.get('/user/:username', (req, res, next) => {
+	if (!user) throw ExpressError('invalid username', 404);
+	return res.send({ user });
+});
+
+
 
 app.listen(3000, function () {
 	console.log('Server started; go to "localhost:3000" to view.');
